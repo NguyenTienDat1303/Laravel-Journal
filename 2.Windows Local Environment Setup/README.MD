@@ -26,16 +26,16 @@ mysql -uroot -p
 ```  
 *Password is empty*
 
-Show database in MySql:
+Show database in MySQL:
 ```
 show databases;
 ```  
-Create database in MySql:
+Create database in MySQL:
 ```
 create database yourdatabasename;
 create database my_db;
 ```  
-Use your database in MySql:
+Use your database in MySQL:
 ```
 user yourdatabasename;
 user my_db;
