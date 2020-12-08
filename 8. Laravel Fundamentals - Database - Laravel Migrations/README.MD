@@ -1,4 +1,4 @@
-### 2. Laravel Blade template engine
+### 2. Migration
 #### Environment configurations:
 Configurations file location
 ```
