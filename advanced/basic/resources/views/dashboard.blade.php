@@ -22,7 +22,7 @@
                         <th scope="col">SL No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Create At</th>
+                        <th scope="col">Created At</th>
                         </tr>
                     </thead>
                     <tbody>

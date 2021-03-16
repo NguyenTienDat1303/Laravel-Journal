@@ -24,6 +24,7 @@
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
+            {{-- <x-navigation-menu-layout/> --}}
 
             <!-- Page Heading -->
             @if (isset($header))
