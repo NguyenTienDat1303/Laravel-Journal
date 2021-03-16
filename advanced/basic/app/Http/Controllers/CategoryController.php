@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Auth;
 use Carbon\Carbon;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Redirect;
 
 class CategoryController extends Controller
@@ -14,15 +14,15 @@ class CategoryController extends Controller
     public function allCat()
     {
         //Join table
-        $categories = DB::table('categories') 
-            -> join('users', 'categories.user_id', 'users.id') 
-            -> select('categories.*', 'users.name') 
-            -> latest() 
-            -> paginate(5);
+        // $categories = DB::table('categories') 
+        //     -> join('users', 'categories.user_id', 'users.id') 
+        //     -> select('categories.*', 'users.name') 
+        //     -> latest() 
+        //     -> paginate(5);
 
         // Use eloquent
         // $categories = Category::all();
-        // $categories = Category::latest() -> paginate(5);//User with order by desc
+        $categories = Category::latest() -> paginate(5);//User with order by desc
 
         // Use query builder
         // $categories = DB::table('categories') -> latest() -> paginate(5);
@@ -58,5 +58,29 @@ class CategoryController extends Controller
         // DB::table('categories') -> insert($data);
 
         return Redirect() -> back() -> with('success', 'Category inserted successfully');
+    }
+
+    public function edit($id)
+    {
+        //Eloquent update item
+        // $categories = Category::find($id);
+
+         //Query bulder update item
+        $categories = DB::table('categories') -> where('id', $id) -> first();
+        return view('admin.category.edit', compact('categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        //Eloquent update item
+        // $categories = Category::find($id) -> update([
+        //     'category_name' => $request -> category_name
+        // ]);
+        //Query bulder update item
+        $data = array();
+        $data['category_name'] = $request -> category_name;
+        $categories = DB::table('categories') -> where('id', $id) -> update($data);
+
+        return Redirect() -> route('all.category') -> with('success', 'Category updated successfully');
     }
 }
