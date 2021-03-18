@@ -7,10 +7,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Redirect;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this -> middleware('auth');
+    }
+
     public function allCat()
     {
         //Join table
@@ -23,10 +28,11 @@ class CategoryController extends Controller
         // Use eloquent
         // $categories = Category::all();
         $categories = Category::latest() -> paginate(5);//User with order by desc
+        $trashCat = Category::onlyTrashed() -> latest() -> paginate(3);
 
         // Use query builder
         // $categories = DB::table('categories') -> latest() -> paginate(5);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact('categories', 'trashCat'));
     }
 
     public function addCat(Request $request)
@@ -82,5 +88,23 @@ class CategoryController extends Controller
         $categories = DB::table('categories') -> where('id', $id) -> update($data);
 
         return Redirect() -> route('all.category') -> with('success', 'Category updated successfully');
+    }
+
+    public function softDelete($id)
+    {
+        $delete = Category::find($id) -> delete();
+        return Redirect() -> back() -> with('success', 'Category soft deleted successfully');
+    }
+
+    public function restore($id)
+    {
+        $delete = Category::withTrashed() -> find($id) -> restore();
+        return Redirect() -> back() -> with('success', 'Category restored successfully');
+    }
+
+    public function pDelete($id)
+    {
+        $delete = Category::onlyTrashed() -> find($id) -> forceDelete();
+        return Redirect() -> back() -> with('success', 'Category permanently deleted successfully');
     }
 }
