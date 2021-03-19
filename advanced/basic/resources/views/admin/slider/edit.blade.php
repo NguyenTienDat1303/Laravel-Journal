@@ -2,11 +2,11 @@
 <div class="col-lg-12">
     <div class="card card-default">
         <div class="card-header card-header-border-bottom">
-            <h2>Create Slider</h2>
+            <h2>Edit Slider</h2>
         </div>
         <div class="card-body">
             <form
-                action=" {{ route('store.slider') }}"
+                action=" {{ route('update.slider', $slider -> id) }}"
                 method="POST"
                 enctype="multipart/form-data"
             >
@@ -19,6 +19,7 @@
                         id="exampleFormControlInput1"
                         placeholder="Slider Title"
                         name="title"
+                        value="{{ $slider -> title }}"
                     />
                 </div>
                 <div class="form-group">
@@ -28,7 +29,7 @@
                         id="exampleFormControlTextarea1"
                         rows="3"
                         name="description"
-                    ></textarea>
+                    >{{ $slider -> description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Image</label>
@@ -37,6 +38,13 @@
                         class="form-control-file"
                         id="exampleFormControlFile1"
                         name="image"
+                    />
+                </div>
+                <div class="form-group">
+                    <img
+                        style="width: 50%;"
+                        src="{{ asset($slider -> image) }}"
+                        alt=""
                     />
                 </div>
                 <div class="form-footer pt-4 pt-5 mt-4 border-top">
